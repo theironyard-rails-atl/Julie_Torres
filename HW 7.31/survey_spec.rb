@@ -8,6 +8,13 @@ describe Survey do
   end
 
   it "ends when all questions have been asked" do
+    poll = Survey.new
+    poll.ask_question
+    poll.ask_question
+    poll.ask_question
+    poll.ask_question
+    poll.ask_question
+    assert poll.finished? == true
   end
 
   it "stores the answers to the questions" do
