@@ -3,16 +3,12 @@ Questions = ["How many toes do you have on each foot?", "How many people named O
 ]
 
 class Survey
-  attr_reader :question_count, :questions, :total
-  def initialize(questions, question_count = 5, total = nil)
+  attr_reader :question_count, :questions
+  def initialize(questions, question_count = 5)
     @question_count = 5
     @questions = questions
     @answers= [ ]
 
-  end
-
-  def finished?
-    @question_count == 0
   end
 
   def ask_question
@@ -20,7 +16,10 @@ class Survey
       puts @questions[0]
       @questions.delete_at(0)
       @answers << gets.chomp.to_i
+  end
 
+  def finished?
+    @question_count == 0
   end
 
   def highest?
@@ -35,15 +34,3 @@ class Survey
     @answers.reduce(:+) / @answers.length.to_f
   end
 end
-
-survey = Survey.new(Questions, 5)
-puts survey.question_count
-
-until survey.finished?
-  survey.ask_question
-end
-
-puts "Survey finished"
-puts survey.highest?
-puts survey.lowest?
-puts survey.mean?
