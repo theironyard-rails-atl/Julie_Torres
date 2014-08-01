@@ -1,20 +1,23 @@
+require 'pry'
+
 CARDS = (2..10).to_a << :A, :J, :Q, :K
 
 
 class Card
   attr_reader :cards
-  def initialize(card)
+  def initialize(cards)
     @cards = cards
   end
 
    def value
-     case @cards
-       when 2..9
-         @cards.to_i
-       when 10 || :J || :Q || :K
+     if (2..9).include? @cards
+         @cards
+     elsif @cards == (10 || :J || :Q || :K)
          10
-       when :A
+     elsif @cards == :A
          1
+    else
+      raise "Card value is invalid"
      end
    end
 end
