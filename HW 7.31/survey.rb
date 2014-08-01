@@ -4,8 +4,8 @@ Questions = ["How many toes do you have on each foot?", "How many people named O
 
 class Survey
   attr_reader :question_count, :questions
-  def initialize(questions, question_count = 5)
-    @question_count = 5
+  def initialize(questions, question_count)
+    @question_count = question_count
     @questions = questions
     @answers= [ ]
 
