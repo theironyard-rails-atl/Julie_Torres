@@ -12,7 +12,7 @@ class Card
    def value
      if (2..9).include? @cards
          @cards
-     elsif @cards == (10 || :J || :Q || :K)
+     elsif [10, :J, :Q, :K].include? @cards
          10
      elsif @cards == :A
          1
@@ -22,6 +22,6 @@ class Card
    end
 end
 
-test_card = Card.new(4)
+test_card = Card.new(:K)
 puts test_card
 puts test_card.value
