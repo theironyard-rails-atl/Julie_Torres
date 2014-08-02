@@ -49,15 +49,22 @@ class Deck
 end
 
 class Hand
-  attr_reader :hand, :new_card, :hand_value
+  attr_reader :hand_cards, :new_card, :hand_value, :card_value
   def initialize
-    @hand = []
+    @hand_cards = []
     @hand_value = 0
   end
-binding.pry  #@hand & @hand_value = nil. Why??
-  def add(new_card)
-    @hand << @new_card
+  #@hand & @hand_value = nil. Why??
+  def add(new_card, card_value)
+    @card_value = card_value
+    @new_card = new_card
+    @hand_cards << @new_card
+    #puts "Hand value is #{@hand_value}"
+    #puts "Card value is #{@card_value}"
+    #binding.pry
     @hand_value += @card_value
+    #puts @card_value
+    #puts @hand_value
   end
 end
 
@@ -65,5 +72,7 @@ end
 test_deck = Deck.new
 test_deck.draw
 test_hand = Hand.new()
-test_hand.add(Card.new(4))
-puts test_hand.hand
+test_hand.add(Card.new(4), Card.new(4).value)
+puts "Hand value is #{test_hand.hand_value}."
+puts "Card value is #{test_hand.card_value}."
+#puts @hand_cards
