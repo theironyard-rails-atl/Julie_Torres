@@ -9,18 +9,18 @@ DECK = CARDS.concat(CARDS).concat(CARDS)
 #puts "#{DECK}"
 
 class Card
-  attr_reader :cards
+  attr_reader :cards, :card_value
   def initialize(cards)
     @cards = cards
   end
 
    def value
      if (2..9).include? @cards
-         @cards
+         @card_value = @cards
      elsif [10, :J, :Q, :K].include? @cards
-         10
+         @card_value = 10
      elsif @cards == :A
-         1
+         @card_value = 1
     else
       raise "Card value is invalid"
      end
@@ -28,7 +28,7 @@ class Card
 end
 
 class Deck
-  attr_reader :deck, :drawn
+  attr_reader :deck, :drawn, :new_card
   def initialize#optional:include qty of decks
     @deck = DECK
     @drawn = [ ]
@@ -43,19 +43,27 @@ class Deck
   end
 
   def draw
-    @drawn << @deck.pop
+    @new_card = @deck.pop
+    @drawn << @new_card
   end
-
-
-
 end
 
-# test_deck = Deck.new
-# #puts test_deck.count
-# test_deck.draw
-# test_deck.draw
-# test_deck.draw
-# puts test_deck.count_drawn
-# test_card = Card.new(:K)
-# puts test_card
-# puts test_card.value
+class Hand
+  attr_reader :hand, :new_card, :hand_value
+  def initialize
+    @hand = []
+    @hand_value = 0
+  end
+binding.pry  #@hand & @hand_value = nil. Why??
+  def add(new_card)
+    @hand << @new_card
+    @hand_value += @card_value
+  end
+end
+
+
+test_deck = Deck.new
+test_deck.draw
+test_hand = Hand.new()
+test_hand.add(Card.new(4))
+puts test_hand.hand
