@@ -15,7 +15,6 @@ class Card
   def self.create_with_attributes(card, card_value)
     card = Card.new(card)
     card_value = card.value
-    # return card_value
   end
 
   def initialize(card)
@@ -36,9 +35,9 @@ class Card
    end
 end
 
-new_card = Card.new((:K))
-puts new_card.card
-puts new_card.value
+# new_card = Card.new((:K))
+# puts new_card.card
+# puts new_card.value
 
 class Deck
   attr_reader :deck, :drawn, :new_card
@@ -62,36 +61,32 @@ class Deck
 end
 
 class Hand
-  attr_reader :cards, :new_card, :hand_value, :card_value
-  def initialize
-    @cards = []
-  end
+  attr_accessor :hand, :new_card, :hand_value
 
-  def add(*new_card)
-    new_card.each do |new_card|
-      @cards << new_card
-      #binding.pry
-    end
-  end
-
-  def hand_value(*new_card)
-    hand_value = 0
-    new_card.each do |card|
-      hand_value += card.value
-      #puts hand_value.to_s
-    end
+  def initialize(hand=[], hand_value=0)
+    @hand = hand
     @hand_value = hand_value
+  end
 
+  def add(*new_card, card_value)
+    @card_value = card_value.to_i
+    puts "Card value is#{@card_value}"
+
+      @hand_value += @card_value
+      puts "Hand value is #{@hand_value}"
+
+    new_card.each do |new_card|
+      @hand << new_card
+    end
   end
 end
 
-#
-# test_deck = Deck.new
-# test_deck.draw
-# test_hand = Hand.new()
-# new_hand = test_hand.add(Card.new(4))
-# puts new_hand
-# test_hand.add(Card.new(:K))
-# puts "Hand is #{test_hand.cards.inspect}"
-# puts "Hand value is #{test_hand.hand_value}."
-# puts @hand_cards
+
+
+card = Card.new(4)
+card2 = Card.new(5)
+card_value = card.value
+card2_value = card2.value
+test_hand = Hand.new()
+new_hand = test_hand.add(card, card_value)
+newer_hand = new_hand.add(card2, card2_value)
