@@ -3,29 +3,42 @@ require 'pry'
 #Suits have been excluded because they do not affect gameplay.
 
 arr = (2..10).to_a << :A, :J, :Q, :K
-CARDS = arr.flatten!
-DECK = CARDS.concat(CARDS).concat(CARDS)
+ITEMS = arr.flatten!
+DECK = ITEMS.concat(ITEMS).concat(ITEMS)
 #puts "Length = #{DECK.length}"
-#puts "#{DECK}"
+
 
 class Card
-  attr_reader :cards, :card_value
-  def initialize(cards)
-    @cards = cards
+  attr_accessor :card_value, :card
+  # attr_reader :card
+
+  def self.create_with_attributes(card, card_value)
+    card = Card.new(card)
+    card_value = card.value
+    # return card_value
+  end
+
+  def initialize(card)
+    @card = card
+    @card_value = card_value
   end
 
    def value
-     if (2..9).include? @cards
-         @card_value = @cards
-     elsif [10, :J, :Q, :K].include? @cards
-         @card_value = 10
-     elsif @cards == :A
-         @card_value = 1
+     if (2..9).include? @card
+         @card
+     elsif [10, :J, :Q, :K].include? @card
+         10
+     elsif @card == :A
+         1
     else
       raise "Card value is invalid"
      end
    end
 end
+
+new_card = Card.new((:K))
+puts new_card.card
+puts new_card.value
 
 class Deck
   attr_reader :deck, :drawn, :new_card
@@ -49,30 +62,36 @@ class Deck
 end
 
 class Hand
-  attr_reader :hand_cards, :new_card, :hand_value, :card_value
+  attr_reader :cards, :new_card, :hand_value, :card_value
   def initialize
-    @hand_cards = []
-    @hand_value = 0
+    @cards = []
   end
-  #@hand & @hand_value = nil. Why??
-  def add(new_card, card_value)
-    @card_value = card_value
-    @new_card = new_card
-    @hand_cards << @new_card
-    #puts "Hand value is #{@hand_value}"
-    #puts "Card value is #{@card_value}"
-    #binding.pry
-    @hand_value += @card_value
-    #puts @card_value
-    #puts @hand_value
+
+  def add(*new_card)
+    new_card.each do |new_card|
+      @cards << new_card
+      #binding.pry
+    end
+  end
+
+  def hand_value(*new_card)
+    hand_value = 0
+    new_card.each do |card|
+      hand_value += card.value
+      #puts hand_value.to_s
+    end
+    @hand_value = hand_value
+
   end
 end
 
-
-test_deck = Deck.new
-test_deck.draw
-test_hand = Hand.new()
-test_hand.add(Card.new(4), Card.new(4).value)
-puts "Hand value is #{test_hand.hand_value}."
-puts "Card value is #{test_hand.card_value}."
-#puts @hand_cards
+#
+# test_deck = Deck.new
+# test_deck.draw
+# test_hand = Hand.new()
+# new_hand = test_hand.add(Card.new(4))
+# puts new_hand
+# test_hand.add(Card.new(:K))
+# puts "Hand is #{test_hand.cards.inspect}"
+# puts "Hand value is #{test_hand.hand_value}."
+# puts @hand_cards
