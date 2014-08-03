@@ -70,10 +70,10 @@ class Hand
 
   def add(*new_card, card_value)
     @card_value = card_value.to_i
-    puts "Card value is#{@card_value}"
+    puts "Card value is #{@card_value}"
 
-      @hand_value += @card_value
-      puts "Hand value is #{@hand_value}"
+    @hand_value += @card_value
+    puts "Hand value is #{@hand_value}"
 
     new_card.each do |new_card|
       @hand << new_card
@@ -88,5 +88,6 @@ card2 = Card.new(5)
 card_value = card.value
 card2_value = card2.value
 test_hand = Hand.new()
-new_hand = test_hand.add(card, card_value)
-newer_hand = new_hand.add(card2, card2_value)
+test_hand.add(card, card_value)
+test_hand.add(card2, card2_value)
+#newer_hand = new_hand.add(card2, card2_value)
