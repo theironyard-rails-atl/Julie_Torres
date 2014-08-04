@@ -75,6 +75,7 @@ class Hand
 
   def add(*new_cards)
     @hand += new_cards
+    get_value
   end
 
   def to_s
@@ -82,6 +83,7 @@ class Hand
   end
 
   def get_value
+    @hand_value = 0
     aces = 0
     @hand.each do |card|
       if card.rank != :A
@@ -110,11 +112,11 @@ class Hand
   end
 end
 
-hand = Hand.new
-hand.add(Card.new(:A, :H))
-hand.add(Card.new(:K, :S))
-
-puts hand.hand
-puts hand.get_value
-puts hand.blackjack?
-puts hand.to_s
+# hand = Hand.new
+# hand.add(Card.new(:A, :H))
+# hand.add(Card.new(:K, :S))
+#
+# puts hand.hand
+# puts hand.get_value
+# puts hand.blackjack?
+# puts hand.to_s

@@ -77,7 +77,7 @@ describe Hand do
 
   it "knows a blackjack" do
     @hand.add(Card.new(:A, :H), Card.new(:K, :S))
-    assert @hand.blackjack?
+    assert_equal true, @hand.blackjack?
   end
 
   it "can be printed to string" do
