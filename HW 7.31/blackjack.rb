@@ -34,7 +34,7 @@ class Card
      end
    end
 
-   def name
+   def to_s
      @card.to_s
    end
 end
@@ -61,6 +61,7 @@ class Deck
   def draw
     @new_card = @deck.pop
     @drawn << @new_card
+    @new_card
   end
 end
 
@@ -77,20 +78,17 @@ class Hand
     @hand_value += @card_value
     new_card.each do |new_card|
       @hand << new_card
-      puts @hand
+       @hand
     end
   end
-puts "Hand contains #{@hand.to_s}"
 
-#   def aces
-#     @aces = 0
-#     @hand.each do |card|
-#       puts card
-#       @aces += 1 if card == :A
-#     end
-#     puts "Hand contains #{@aces} Aces."
-#   end
-# end
+  def to_s
+    array = []
+    @hand.each do |card|
+      array << card.to_s
+    end
+    array.join(', ')
+  end
 
   def ace_adjust
       @hand.each do |card|
@@ -113,4 +111,5 @@ test_hand.add(card, card_value)
 test_hand.add(card2, card2_value)
 test_hand.add(card3, card3_value)
 test_hand.ace_adjust
+puts "Hand contains #{test_hand}"
 puts test_hand.hand_value
