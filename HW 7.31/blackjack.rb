@@ -9,16 +9,16 @@ DECK = ITEMS.concat(ITEMS).concat(ITEMS)
 
 
 class Card
-  attr_accessor :card_value, :card
+  attr_accessor :card_value, :card, :name
   # attr_reader :card
 
-  def self.create_with_attributes(card, card_value)
-    card = Card.new(card)
-    card_value = card.value
-  end
+  # def self.create_with_attributes(card, card_value)
+  #   card = Card.new(card)
+  #   card_value = card.value
+  # end
 
   def initialize(card)
-    @card = card
+    @card = card  #TODO: change this to @rank
     @card_value = card_value
   end
 
@@ -28,10 +28,14 @@ class Card
      elsif [10, :J, :Q, :K].include? @card
          10
      elsif @card == :A
-         1
+         11
     else
       raise "Card value is invalid"
      end
+   end
+
+   def name
+     @card.to_s
    end
 end
 
@@ -63,31 +67,50 @@ end
 class Hand
   attr_accessor :hand, :new_card, :hand_value
 
-  def initialize(hand=[], hand_value=0)
-    @hand = hand
-    @hand_value = hand_value
+  def initialize
+    @hand = []
+    @hand_value = 0
   end
 
   def add(*new_card, card_value)
-    @card_value = card_value.to_i
-    puts "Card value is #{@card_value}"
-
+    @card_value = card_value
     @hand_value += @card_value
-    puts "Hand value is #{@hand_value}"
-
     new_card.each do |new_card|
       @hand << new_card
+      puts @hand
     end
+  end
+puts "Hand contains #{@hand.to_s}"
+
+#   def aces
+#     @aces = 0
+#     @hand.each do |card|
+#       puts card
+#       @aces += 1 if card == :A
+#     end
+#     puts "Hand contains #{@aces} Aces."
+#   end
+# end
+
+  def ace_adjust
+      @hand.each do |card|
+        puts "Reducing value of #{card}"
+        @hand_value -= 10 if card.card == (:A) && @hand_value >21
+      end
   end
 end
 
 
-
 card = Card.new(4)
-card2 = Card.new(5)
+card.name
+card2 = Card.new(:A)
+card3 = Card.new(:A)
 card_value = card.value
 card2_value = card2.value
+card3_value = card3.value
 test_hand = Hand.new()
 test_hand.add(card, card_value)
 test_hand.add(card2, card2_value)
-#newer_hand = new_hand.add(card2, card2_value)
+test_hand.add(card3, card3_value)
+test_hand.ace_adjust
+puts test_hand.hand_value
