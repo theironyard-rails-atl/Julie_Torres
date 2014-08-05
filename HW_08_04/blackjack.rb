@@ -1,10 +1,12 @@
 require 'pry'
 
-RANKS = (2..10).to_a + [:A, :J, :Q, :K]
-SUITS = [:C, :D, :H, :S]
+
 
 
 class Card
+  RANKS = (2..10).to_a + [:A, :J, :Q, :K]
+  SUITS = [:C, :D, :H, :S]
+
   attr_reader :rank, :suit
 
   def initialize(rank, suit)
@@ -59,8 +61,6 @@ class Deck
 
 
   def reshuffle
-    @drawn = [ ]
-    @cards += @drawn
     @cards.shuffle!
   end
 end
@@ -125,21 +125,25 @@ class Person
     @hand = Hand.new
   end
 
+  def hit
+    @hand.add(@deck.draw)
+  end
+
   def get_score
-    hand.get_value
+    @hand.get_value
   end
 
   def busted?
-    hand.busted?
+    @hand.busted?
   end
 
   def blackjack?
-    hand.blackjack?
+    @hand.blackjack?
   end
 end
 
 
-class Player > Person
+class Player < Person
   attr_accessor :money
   def initialize(money= 100)
     @money = money
@@ -159,7 +163,7 @@ class Player > Person
   end
 end
 
-def Dealer > Person
+class Dealer < Person
   attr_accessor :deck
   def initialize
     super
@@ -169,8 +173,31 @@ def Dealer > Person
   def reshuffle
     #in below line, deck is a method, not a variable
     #the attr_accessor turns it into a method
-    deck.reshuffle
+    @deck.reshuffle
   end
 
-  #TODO: add deal, hit, and dealer_hit? methods
+  def deal(*people)
+    people.each do |person|
+      2.times {person.hand.add(@deck.draw)}
+    end
+  end
+
+  def deal_to_self
+    2.times {@hand.add(@deck.draw)}
+  end
+
+  #TODO: make sure this works
+  def dealer_hit?
+    self.get_score < 17
+  end
 end
+
+dealer = Dealer.new
+# dealer.deal(dealer)
+dealer.reshuffle
+dealer.deal_to_self
+puts dealer.get_score
+puts dealer.dealer_hit?
+dealer.hit
+puts dealer.get_score
+# dealer.dealer_hit?
