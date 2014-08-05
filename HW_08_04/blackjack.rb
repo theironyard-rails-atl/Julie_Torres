@@ -1,8 +1,5 @@
 require 'pry'
 
-
-
-
 class Card
   RANKS = (2..10).to_a + [:A, :J, :Q, :K]
   SUITS = [:C, :D, :H, :S]
@@ -13,8 +10,7 @@ class Card
     @rank, @suit = rank, suit
   end
 
-#This value method is redundant, but I am keeping it for purposes of passing the spec.
-#Best to use the value method in the Hand class.
+
    def get_value
      if (2..10).include?(@rank)
          @rank
@@ -43,6 +39,7 @@ class Deck
         @cards << Card.new(rank, suit)
       end
     end
+    @cards.shuffle!
   end
 
   def count
@@ -66,11 +63,10 @@ class Deck
 end
 
 class Hand
-  attr_accessor :hand, :hand_value
+  attr_accessor :hand
 
   def initialize
     @hand = []
-    @hand_value = 0
   end
 
   def add(*new_cards)
@@ -83,22 +79,18 @@ class Hand
   end
 
   def get_value
-    @hand_value = 0
+    hand_value = 0
     aces = 0
     @hand.each do |card|
-      if card.rank != :A
-        @hand_value += card.get_value
-      else
-        @hand_value += card.get_value
-        aces += 1
-      end
+      hand_value += card.get_value
+      aces +=1 if card.rank == :A
 
-      while @hand_value > 21 && aces > 0
-        @hand_value -= 10
+      while hand_value > 21 && aces > 0
+        hand_value -= 10
         aces -= 1
       end
     end
-    @hand_value
+    hand_value
   end
 
 
@@ -108,7 +100,7 @@ class Hand
   end
 
   def blackjack?
-    @hand.count == 2 && @hand_value == 21
+    @hand.count == 2 && self.get_value == 21
   end
 end
 
@@ -119,14 +111,6 @@ class Person
   def initialize(name="Guest" + "#{rand(10)}")
     @name = name
     @hand = Hand.new
-  end
-
-  def hand
-    @hand = Hand.new
-  end
-
-  def hit
-    @hand.add(@deck.draw)
   end
 
   def get_score
@@ -145,21 +129,21 @@ end
 
 class Player < Person
   attr_accessor :money
-  def initialize(money= 100)
+  def initialize(name, money= 100)
     @money = money
-    super
+    super name #calls initialize on the parent class for the name variable
   end
 
   def in_game?
-    @money > 0
+    @money >= 10
   end
 
   def win_money(bet, odds=1)
-    self.money = self.money += bet * odds
+    @money = @money + (bet * odds)
   end
 
   def lose(bet)
-    self.money = self.money -= bet
+    @money = @money - bet
   end
 end
 
@@ -170,20 +154,18 @@ class Dealer < Person
     @deck = Deck.new
   end
 
-  def reshuffle
-    #in below line, deck is a method, not a variable
-    #the attr_accessor turns it into a method
-    @deck.reshuffle
-  end
-
   def deal(*people)
     people.each do |person|
-      2.times {person.hand.add(@deck.draw)}
+      2.times {hit(person)}
     end
   end
 
   def deal_to_self
     2.times {@hand.add(@deck.draw)}
+  end
+
+  def hit(person)
+    person.hand.add(@deck.draw)
   end
 
   #TODO: make sure this works
@@ -192,12 +174,8 @@ class Dealer < Person
   end
 end
 
-dealer = Dealer.new
-# dealer.deal(dealer)
-dealer.reshuffle
-dealer.deal_to_self
-puts dealer.get_score
-puts dealer.dealer_hit?
-dealer.hit
-puts dealer.get_score
-# dealer.dealer_hit?
+# class Game
+#   attr_accessor :money
+#   def initialize(*players)
+#     players.each do {Player.new(name)}
+#   end
