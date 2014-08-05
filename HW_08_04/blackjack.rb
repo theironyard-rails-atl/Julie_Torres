@@ -112,11 +112,65 @@ class Hand
   end
 end
 
-# hand = Hand.new
-# hand.add(Card.new(:A, :H))
-# hand.add(Card.new(:K, :S))
-#
-# puts hand.hand
-# puts hand.get_value
-# puts hand.blackjack?
-# puts hand.to_s
+class Person
+  attr_accessor :hand
+  attr_reader :name
+
+  def initialize(name="Guest" + "#{rand(10)}")
+    @name = name
+    @hand = Hand.new
+  end
+
+  def hand
+    @hand = Hand.new
+  end
+
+  def get_score
+    hand.get_value
+  end
+
+  def busted?
+    hand.busted?
+  end
+
+  def blackjack?
+    hand.blackjack?
+  end
+end
+
+
+class Player > Person
+  attr_accessor :money
+  def initialize(money= 100)
+    @money = money
+    super
+  end
+
+  def in_game?
+    @money > 0
+  end
+
+  def win_money(bet, odds=1)
+    self.money = self.money += bet * odds
+  end
+
+  def lose(bet)
+    self.money = self.money -= bet
+  end
+end
+
+def Dealer > Person
+  attr_accessor :deck
+  def initialize
+    super
+    @deck = Deck.new
+  end
+
+  def reshuffle
+    #in below line, deck is a method, not a variable
+    #the attr_accessor turns it into a method
+    deck.reshuffle
+  end
+
+  #TODO: add deal, hit, and dealer_hit? methods
+end
