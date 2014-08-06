@@ -58,6 +58,8 @@ class Deck
 
 
   def reshuffle
+    @cards += @drawn
+    @drawn = []
     @cards.shuffle!
   end
 end
@@ -110,6 +112,10 @@ class Person
 
   def initialize(name="Guest" + "#{rand(10)}")
     @name = name
+    @hand = Hand.new
+  end
+
+  def reset_hand
     @hand = Hand.new
   end
 
@@ -173,9 +179,3 @@ class Dealer < Person
     self.get_score < 17
   end
 end
-
-# class Game
-#   attr_accessor :money
-#   def initialize(*players)
-#     players.each do {Player.new(name)}
-#   end
