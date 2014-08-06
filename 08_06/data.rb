@@ -42,7 +42,7 @@ class Inventory
 
 ##### Cost method is not returning correct value #######
   def get_cost
-    cost = @widgets.map { |widget| widget[:cost_to_make]}
+    cost = @widgets.map { |widget| widget[:sold] * widget[:cost_to_make]}
     total_cost = cost.reduce(:+)
     @total_cost = total_cost.to_f
   end
