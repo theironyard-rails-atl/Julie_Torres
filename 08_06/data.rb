@@ -29,12 +29,18 @@ class Inventory
     @widgets.min_by { |widget| widget[:price] }
   end
 
+  def get_sold_by_dept
+    sold = @widgets.map { |widget| widget[:sold].to_s + " sold by " + widget[:department].to_s}
+
+  end
+
   def get_revenue
      sold = @widgets.map { |widget| widget[:sold] * widget[:price]}
      revenue = sold.reduce(:+)
      @revenue = revenue.to_f
   end
 
+##### Cost method is not returning correct value #######
   def get_cost
     cost = @widgets.map { |widget| widget[:cost_to_make]}
     total_cost = cost.reduce(:+)
@@ -44,6 +50,12 @@ class Inventory
   def get_profit
     @revenue - @total_cost
   end
+
+  def get_best_selling
+    sold = @widgets.sort_by { |widget| widget[:sold]}
+    array = sold[0..10]
+    array.map { |sold| sold[:name] }
+  end
 end
 
 
@@ -52,3 +64,5 @@ inventory = Inventory.new
 puts "Revenue is #{inventory.get_revenue}."
 puts "Total cost is #{inventory.get_cost}."
 puts "Total profit is #{inventory.get_profit}."
+#puts inventory.get_sold_by_dept
+puts "Best selling items are: #{inventory.get_best_selling}"
