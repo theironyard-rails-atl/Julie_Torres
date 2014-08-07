@@ -40,7 +40,6 @@ class Inventory
      @revenue = revenue.to_f
   end
 
-##### Cost method is not returning correct value #######
   def get_cost
     cost = @widgets.map { |widget| widget[:sold] * widget[:cost_to_make]}
     total_cost = cost.reduce(:+)
@@ -64,5 +63,5 @@ inventory = Inventory.new
 puts "Revenue is #{inventory.get_revenue}."
 puts "Total cost is #{inventory.get_cost}."
 puts "Total profit is #{inventory.get_profit}."
-#puts inventory.get_sold_by_dept
+puts inventory.get_sold_by_dept
 puts "Best selling items are: #{inventory.get_best_selling}"
