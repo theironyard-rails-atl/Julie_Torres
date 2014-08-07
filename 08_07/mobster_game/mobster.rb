@@ -9,6 +9,7 @@ class Mobster
     @respect = 0
     @heat = 0
     @level = 1
+    @turf = []
   end
 
   def lay_low
@@ -25,8 +26,20 @@ class Mobster
     puts "You took on #{heat} heat and earned $#{money}"
   end
 
+  def earn_money(money)
+    @money += money.to_i
+  end
+
+  def earn_respect(respect)
+    @respect += respect.to_i
+  end
+
+  def add_territory(territory)
+    @turf.push(territory)
+  end
+
   def fight(rival)
-    damage = rival.level * rand(8)
+    damage = rival.level.to_i * rand(8)
     hits = self.level * rand(10)
     if damage < hits
       puts "You win!"
@@ -48,4 +61,8 @@ class Mobster
     end
   end
 
+    def win_fight
+      self.earn_money(rival.money) #TODO: check and make sure this method knows who rival is
+      self.earn_respect(rival.level.to_i * 5) #TODO: make sure this works
+    end
 end
