@@ -19,5 +19,7 @@ bud.lose_respect(1)
 bud.get_stats
 bud.level_up
 bud.get_stats
+bud.add_territory("Peter's Bar")
+bud.get_stats
 bud.fight(rival)
 bud.get_stats

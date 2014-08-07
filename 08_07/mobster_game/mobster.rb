@@ -2,6 +2,8 @@ require "./mobster_game.rb"
 
 class Mobster
   include Arrestable
+  include Respectable
+  include Cashable
   attr_accessor :respect, :level, :money, :heat
 
   def initialize
@@ -19,6 +21,7 @@ class Mobster
 
   def get_stats
     puts "You have $#{@money}, #{@heat} heat, #{@respect} respect, and are level #{@level}."
+    puts "You have #{@turf.count} territories: #{@turf}"
   end
 
   def lay_low
@@ -29,27 +32,11 @@ class Mobster
   def extort(business)
     level = business.level.to_i
     heat = rand(0..level)
-    money = 5 * level #TODO: figure out why this occassionally errors out
+    money = 5 * level
     @heat += heat
     @money += money
-    #make business.extorted_by == mobster, and allow collect method, add business to "territory" array
+    #TODO: make business.extorted_by == mobster, and allow collect method, add business to "territory" array
     puts "You took on #{heat} heat and earned $#{money}"
-  end
-
-  def earn_money(money)
-    @money += money.to_i
-  end
-
-  def earn_respect(respect)
-    @respect += respect.to_i
-  end
-
-  def lose_money(money)
-    @money -= money.to_i
-  end
-
-  def lose_respect(respect)
-    @respect -= respect.to_i
   end
 
   def add_territory(territory)

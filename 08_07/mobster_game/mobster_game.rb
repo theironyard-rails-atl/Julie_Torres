@@ -20,3 +20,23 @@ module Arrestable
     end
   end
 end
+
+module Respectable
+  def earn_respect(respect)
+    @respect += respect.to_i
+  end
+
+  def lose_respect(respect)
+    @respect -= respect.to_i
+  end
+end
+
+module Cashable
+  def earn_money(money)
+    @money += money.to_i
+  end
+
+  def lose_money(money)
+    @money -= money.to_i
+  end
+end
