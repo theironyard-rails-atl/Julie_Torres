@@ -12,14 +12,24 @@ class Mobster
     @turf = []
   end
 
+  def level_up
+    "You've leveled up! You are now #{@level}!"
+    @level += 1
+  end
+
+  def get_stats
+    puts "You have $#{@money}, #{@heat} heat, #{@respect} respect, and are level #{@level}."
+  end
+
   def lay_low
     @heat -= 10
     @respect -=5
   end
 
   def extort(business)
-    heat = rand(0..business.level.to_i)
-    money = 5 * (rand(1..business.level.to_i))
+    level = business.level.to_i
+    heat = rand(0..level)
+    money = 5 * level #TODO: figure out why this occassionally errors out
     @heat += heat
     @money += money
     #make business.extorted_by == mobster, and allow collect method, add business to "territory" array
@@ -34,6 +44,14 @@ class Mobster
     @respect += respect.to_i
   end
 
+  def lose_money(money)
+    @money -= money.to_i
+  end
+
+  def lose_respect(respect)
+    @respect -= respect.to_i
+  end
+
   def add_territory(territory)
     @turf.push(territory)
   end
@@ -43,17 +61,27 @@ class Mobster
     hits = self.level * rand(10)
     if damage < hits
       puts "You win!"
-      self.win_fight
+      #TODO: create win-fight method
+      self.earn_money(rival.money)
+      self.earn_respect(rival.level.to_i * 2)
       #win money
       #win respect
       #win businesses to extort from
     elsif damage > hits
+      #TODO: create lose fight method
       puts "You wake up in the hospital, penniless and bruised."
-      self.lose_fight
-      #lose money
-      #lose respect
+      #lose all money
+      self.lose_money(@money)
+      #lose respect (1 pt per level advantage, 1 pt min)
+      if @level > rival.level.to_i
+        self.lose_respect(@level - rival.level.to_i)
+      else
+        self.lose_respect(1)
+      end
       #lose one extorted territory
+      @turf.pop
     else
+      #TODO: create tie fight method
       puts "You beat each other senseless.\n
       Finally you\'re both in so much pain that no one dares throw another punch.\n
       Both of you leave with your respect and your money still intact.\n
@@ -61,8 +89,8 @@ class Mobster
     end
   end
 
-    def win_fight
-      self.earn_money(rival.money) #TODO: check and make sure this method knows who rival is
-      self.earn_respect(rival.level.to_i * 5) #TODO: make sure this works
-    end
+    # def win_fight
+    #   self.earn_money(rival.money) #TODO: check and make sure this method knows who rival is
+    #   self.earn_respect(rival.level.to_i * 5) #TODO: make sure this works
+    # end
 end
