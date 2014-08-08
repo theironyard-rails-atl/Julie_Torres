@@ -4,7 +4,7 @@ require "./business.rb"
 require "./rival.rb"
 
 bud = Mobster.new
-shop = Business.new
+shop = Business.new("The Rock Farm")
 rival = Rival.new(1, "Burt's Cafe")
 bud.extort(shop)
 bud.get_stats
@@ -20,6 +20,8 @@ bud.get_stats
 bud.level_up
 bud.get_stats
 bud.add_territory("Peter's Bar")
+bud.get_stats
+bud.fight(rival)
 bud.get_stats
 bud.fight(rival)
 bud.get_stats
