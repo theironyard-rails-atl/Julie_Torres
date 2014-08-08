@@ -1,11 +1,11 @@
-require "./mobster_game.rb"
+require "./mixins.rb"
 
 class Mobster
   include Arrestable
   include Respectable
   include Cashable
   include Fightable
-  attr_accessor :respect, :level, :money, :heat, :turf
+  attr_accessor :respect, :level, :money, :heat, :turf, :fights_won, :bosses_killed, :kill_count
 
   def initialize
     @money = 0
@@ -13,6 +13,9 @@ class Mobster
     @heat = 0
     @level = 1
     @turf = []
+    @fights_won = 0
+    @bosses_killed = 0
+    @kill_count = 0
   end
 
   def level_up
@@ -41,7 +44,7 @@ class Mobster
   end
 
   def add_territory(territory)
-    @turf.push(territory)
+      @turf.push(territory)
   end
 
   def die

@@ -41,16 +41,16 @@ module Cashable
   end
 end
 
-module fightable?
+module Fightable
 
   def fight(rival)
     damage = rival.level.to_i * rand(8)
     hits = self.level * rand(10)
 
-    if rival.alive? == false || rival.fightable? == false
+    if rival.alive == false || rival.fightable == false
       puts "You cannot fight this rival. This rival is either dead or is a Rival Boss."
       puts "Rival bosses can only be fought to death."
-      break
+      # break
     elsif damage < hits
       self.win_fight(rival)
     elsif damage > hits
@@ -62,10 +62,10 @@ module fightable?
 
   def win_fight(rival)
     puts "You win!"
+    @fights_won += 1
     self.earn_money(rival.money)
     self.earn_respect(rival.level.to_i * 2)
-    rival.pay_territory(self)
-    rival.fightable? == false
+    rival.fightable == false
   end
 
   def lose_fight(rival)
@@ -78,8 +78,6 @@ module fightable?
     else
       self.lose_respect(1)
     end
-    #lose one extorted territory
-    @turf.pop
   end
 
   def tie_fight(rival)
@@ -92,14 +90,15 @@ module fightable?
     damage = rival.level.to_i * rand(8)
     hits = self.level * rand(10)
 
-    if rival.alive? == false || rival.fightable? == false
+    unless rival.alive && rival.fightable
       puts "This rival is either dead or is a Rival Boss."
       puts "To fight a rival boss, you must have the required experience."
-      break
-      #TODO: Make sure the break works.
-    elsif damage < hits
+      #TODO: get this to break out of the entire method
+    end
+
+    if damage < hits
       self.kill_rival(rival)
-      rival.fightable? = false
+      rival.fightable = false
     elsif damage > hits
       self.die
     else
@@ -112,7 +111,22 @@ module fightable?
       self.earn_money(rival.money)
       self.earn_respect(rival.level.to_i * 10)
       @heat += (rival.level.to_i * 3)
-      rival.pay_territory(self)
-      rival.fightable? == false
+      @fights_won += 1
+      @kill_count += 1
+      rival.fightable == false
+      rival.alive == false
+  end
+
+  def kill_rival_boss(boss)
+    puts "You kill the Rival Boss, taking his turf and gaining control of his gang."
+    self.earn_money(1000)
+    self.earn_respect(100)
+    @heat += (rand(5..30))
+    @fights_won += 1
+    @kill_count += 1
+    @bosses_killed += 1
+    boss.pay_territory(self)
+    boss.fightable == false
+    boss.alive == false
   end
 end
