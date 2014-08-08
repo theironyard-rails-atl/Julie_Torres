@@ -5,10 +5,9 @@ class Mobster
   include Respectable
   include Cashable
   include Fightable
-  attr_accessor :respect, :level, :money, :heat, :turf, :alive
+  attr_accessor :respect, :level, :money, :heat, :turf
 
   def initialize
-    @alive = true
     @money = 0
     @respect = 0
     @heat = 0
@@ -44,5 +43,9 @@ class Mobster
   def add_territory(territory)
     @turf.push(territory)
   end
+
+  def die
+    puts "You die a horrible, grizzly death. Fear not--your death will be avenged."
+    exit
+  end
 end
-  

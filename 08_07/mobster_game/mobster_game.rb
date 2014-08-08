@@ -85,4 +85,30 @@ module Fightable
     puts "Finally you\'re both in so much pain that no one dares throw another punch.\n"
     puts "Both of you leave with your respect and your money still intact.\n"
   end
+
+  def fight_to_death(rival)
+    damage = rival.level.to_i * rand(8)
+    hits = self.level * rand(10)
+
+    if rival.fightable == false
+      puts "Dead rivals cannot be fought, but feel free to take out your anger on the corpse."
+      #TODO: look up the method to exit loop --stupid internet is down!
+    elsif damage < hits
+      self.kill_rival(rival)
+      rival.fightable = false
+    elsif damage > hits
+      self.die
+    else
+      self.tie_fight(rival)
+    end
+  end
+
+  def kill_rival(rival)
+      puts "Murderer!"
+      self.earn_money(rival.money)
+      self.earn_respect(rival.level.to_i * 10)
+      @heat += (rival.level.to_i * 3)
+      rival.pay_territory(self)
+      rival.fightable == false
+  end
 end

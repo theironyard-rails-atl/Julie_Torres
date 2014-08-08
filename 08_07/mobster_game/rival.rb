@@ -1,5 +1,6 @@
 class Rival
-  attr_reader :level, :money, :territory, :rival_turf, :fightable
+  attr_reader :level, :money, :territory, :rival_turf
+  attr_accessor :fightable
 
   def initialize(level=(rand(1..10)), rival_turf=nil)
     @level = level
