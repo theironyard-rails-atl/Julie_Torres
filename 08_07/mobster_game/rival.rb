@@ -1,6 +1,6 @@
 class Rival
   attr_reader :level, :money, :territory
-  attr_accessor :fightable, :alive
+  attr_accessor :fightable, :alive, :rival_turf
 
   def initialize(level=(rand(1..9)))
     @level = level
@@ -14,7 +14,7 @@ class Rival_Boss < Rival
   #Rival boss has territory.
   attr_reader :rival_turf
   def initialize(level=10, rival_turf=nil)
-    super
+    super(rival_turf)
     @fightable = false
     @money = 1000
     @rival_turf = rival_turf
