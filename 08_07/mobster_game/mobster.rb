@@ -51,4 +51,11 @@ class Mobster
     puts "You die a horrible, grizzly death. Fear not--your death will be avenged."
     exit
   end
+
+  def win_game
+    puts "You defeated the Top Boss. You are the most feared mobster in the nation. You win!"
+    puts "Here are your ending stats:"
+    mobster.get_stats
+    exit
+  end
 end

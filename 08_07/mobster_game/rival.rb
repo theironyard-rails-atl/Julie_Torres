@@ -34,7 +34,17 @@ class Rival_Boss < Rival
     end
   end
 end
-  #def --get multiple territories, get massive respect, get soldiers
+
+class Rival_End_Boss < Rival_Boss
+  def fightable?(mobster)
+    if mobster.bosses_killed >= 3 && mobster.respect >= 1000
+      @fightable = true
+    else
+      puts "The End Boss laughs at your challenge. You are beneath him."
+      puts "You must kill at least 3 bosses and gain at least 1000 respect to fight the End Boss."
+    end
+  end
+end
 
 
 

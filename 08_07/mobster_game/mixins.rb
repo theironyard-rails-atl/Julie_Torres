@@ -44,14 +44,19 @@ end
 module Fightable
 
   def fight(rival)
+    unless rival.alive == false || rival.fightable == false
+      self.get_winner(rival)
+    else
+      puts "This rival is either dead or is a rival boss."
+      puts "Rival bosses can only be fought to death."
+    end
+  end
+
+  def get_winner(rival)
     damage = rival.level.to_i * rand(8)
     hits = self.level * rand(10)
 
-    if rival.alive == false || rival.fightable == false
-      puts "You cannot fight this rival. This rival is either dead or is a Rival Boss."
-      puts "Rival bosses can only be fought to death."
-      # break
-    elsif damage < hits
+    if damage < hits
       self.win_fight(rival)
     elsif damage > hits
       self.lose_fight(rival)
@@ -87,14 +92,16 @@ module Fightable
   end
 
   def fight_to_death(rival)
+    unless rival.alive == false || rival.fightable == false
+      self.get_killer(rival)
+    else
+      puts "You do not have sufficient experience to fight this rival."
+    end
+  end
+
+  def get_killer(rival)
     damage = rival.level.to_i * rand(8)
     hits = self.level * rand(10)
-
-    unless rival.alive && rival.fightable
-      puts "This rival is either dead or is a Rival Boss."
-      puts "To fight a rival boss, you must have the required experience."
-      #TODO: get this to break out of the entire method
-    end
 
     if damage < hits
       self.kill_rival(rival)
@@ -107,7 +114,7 @@ module Fightable
   end
 
   def kill_rival(rival)
-      puts "Murderer!"
+      puts "You kill your rival and take his money. Murderer!"
       self.earn_money(rival.money)
       self.earn_respect(rival.level.to_i * 10)
       @heat += (rival.level.to_i * 3)
