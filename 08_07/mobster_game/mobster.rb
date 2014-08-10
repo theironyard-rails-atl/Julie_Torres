@@ -7,7 +7,8 @@ class Mobster
   include Fightable
   attr_accessor :respect, :level, :money, :heat, :turf, :fights_won, :bosses_killed, :kill_count
 
-  def initialize
+  def initialize(name)
+    @name = name
     @money = 0
     @respect = 0
     @heat = 0
