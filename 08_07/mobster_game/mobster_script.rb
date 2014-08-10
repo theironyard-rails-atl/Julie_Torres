@@ -257,7 +257,7 @@ def action_loop
   end
 end
 
-# @round = 49  #This line for testing End Boss
+@round = 1
 create_mobster
 begin_game
 action_loop
