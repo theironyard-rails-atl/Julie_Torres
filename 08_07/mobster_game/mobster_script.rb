@@ -2,10 +2,9 @@ require "./mixins.rb"
 require "./mobster.rb"
 require "./business.rb"
 require "./rival.rb"
-require "./event.rb"
 
-class Game
-  attr_accessor :mobster, :game, :current_event
+
+
 
   def create_mobster
     puts "What is your mobster's name?"
@@ -33,6 +32,8 @@ class Game
   end
 
   def respond(action)
+    @acton = action
+
     if @action == "help"
       puts "Help page"
       #TODO: display help
@@ -48,19 +49,29 @@ class Game
       @current_event.respond(@action)
     end
   end
-end
 
-@game = Game.new
-@game.create_mobster
-@game.begin_game
+
+
+  def new_rival
+    @options = ['ignore', 'fight', 'help', 'exit']
+    @rival = Rival.new
+
+    puts "A new rival has crossed into your territory."
+    puts "You can fight him for a chance to earn respect and money, or you can ignore him."
+    puts "Your options are #{@options}. What would you like to do?"
+    @action = gets.chomp.downcase
+    respond(@action)
+  end
+
+
+create_mobster
+begin_game
 
   until @action == "exit"
     event = rand(1..10).to_i
     case event
     when (1..10)
-      @current_event = Rival_Crossing.new #TODO: figure out why this isn't working
-      @action = gets.chomp.downcase
-      @current_event.respond(@action)
+      new_rival
     else
       raise "Event not generated"
     end
