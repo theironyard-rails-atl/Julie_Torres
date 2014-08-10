@@ -45,7 +45,7 @@ class Mobster
   end
 
   def add_territory(territory)
-      @turf.push(territory)
+    @turf.push(territory)
   end
 
   def die
