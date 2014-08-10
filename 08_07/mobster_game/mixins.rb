@@ -8,15 +8,16 @@ module Arrestable
   end
 
   def be_jailbird
-    jailtime = @heat - (@heat - (@level * 10))
+    jailtime = @heat - (@level * 10)
     if jailtime > 50
       #die in jail
       "You die from old age in jail."
       self.dead? == true
     else
-      self.money == 0
+      puts "You sit in jail for #{jailtime} years, leaving penniless but with a lot more street cred."
+      self.money = 0
       self.respect += jailtime
-      self.heat == 0
+      self.heat = 0
     end
   end
 end

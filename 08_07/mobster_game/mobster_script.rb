@@ -138,22 +138,45 @@ def everyday_action
   elsif @action == "exit"
     exit
   elsif @action == "collect"
+    #collection extortion $$ from all businesses in your territory
     puts "You collect"
     @mobster.turf.each do |biz|
       @mobster.collect(biz)
     end
-
-    #extort from all businesses in your territory
   elsif @action == "hussle"
-    #earn a random amount of money, should be lower than what you get with 3 properties
+    #earn a random amount of money
+    puts "You earn a little money with your regular hussle."
+    puts "The cops know what you're up to, but they don't waste time on petty thugs."
+    @mobster.earn_money(rand(30..40))
   elsif @action == "shmooze"
     #increase respect by talking to other mobsters
+    puts "Other mobsters can't respect you if they don't know who you are."
+    puts "You hang out at the bar, shmoozing with the made men."
+    @mobster.earn_respect(rand(1..10))
   elsif @action.include? ("lay" || "low")
-    #lay low method
+    #lose heat (and some respect) by laying low
+    puts "You lay low for a while, tired of seeing your mug on Wanted posters."
+    puts "Who cares what your crew says? You know what prison food tastes like, and you're NOT going back to that."
+    @mobster.lay_low
   else
     puts "That is not a valid action. Your options are #{@options}."
     @action = gets.chomp.downcase
     everyday_action
+  end
+end
+
+def raid
+  #get arrested if heat is more than 10x your level
+  puts "It's a raid!!!"
+  if @mobster.arrested?
+    puts "The cops spy you hiding in the corner, and haul you off to jail."
+    @mobster.be_jailbird
+  elsif @mobster.wanted?
+    puts "You sneak out the back door, just as the cops barge in."
+    puts "That was a close call! Better lay low--next time you might not be so lucky."
+  else
+    puts "The cops throw you up against the wall and compare your face against the Wanted posters."
+    puts "You laugh, knowing they've got nothing on you."
   end
 end
 
@@ -169,12 +192,14 @@ until @action == "exit"
   case event
   when 11
     new_rival
-  when (6..10)
+  when (1..5)
     new_business
   when 31
     new_boss
-  when (1..5)
+  when 41
     ordinary_day
+  when (6..10)
+    raid
   else
     raise "Event not generated"
   end

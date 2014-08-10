@@ -37,7 +37,7 @@ class Mobster
   def extort(business)
     @turf.push business
     self.collect(business)
-    heat = rand(0..level)
+    heat = rand(business.level.to_i * 3).to_i
     @heat += heat
   end
 
@@ -45,7 +45,7 @@ class Mobster
     level = business.level.to_i
     money = 5 * level
     @money += money
-    puts "You earned $#{money}"
+    puts "You collect $#{money} from #{business.name}"
   end
 
 
