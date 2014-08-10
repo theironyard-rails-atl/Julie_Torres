@@ -3,9 +3,11 @@ require "./mobster.rb"
 require "./business.rb"
 require "./rival.rb"
 
-
+#TODO: fix bug that is causing level to go negative
 #TODO: create a Game class, and dump all this into it
-#TODO: make the ouput prettier by putsing a ____ line aft
+#TODO: output the round
+#TODO: adjust fight settings to make it easier to win
+#TODO: fix output of round on rival boss levels
 
 def create_mobster
   puts "What is your mobster's name?"
@@ -197,33 +199,46 @@ def boss_visit
 end
 
 
-
+@round = 19
 create_mobster
 begin_game
 
 
-#TODO: add additional events
-until @action == "exit"  #TODO: add round counter, and have boss appear every 20 rounds, big boss appear every 50
-  event = rand(1..10).to_i
-  case event
-  when (1..2)
-    new_rival
-  when (3..4)
-    new_business
-  # when 6
-  #   new_boss
-  when 5
-    raid
-  when 6
-    boss_visit
-  when (7..10)
-    ordinary_day
-  else
-    raise "Event not generated"
+#Game continues generating events until user chooses to exit, or until 20 or 50 rounds have passed
+def action_loop
+  @round += 1
+  puts "It is day #{@round}"
+  until @action == "exit" || (@round % 20) == 0 ||  (@round % 50 == 0)
+    event = rand(1..10)
+    case event
+    when (1..2)
+      new_rival
+    when (3..4)
+      new_business
+    when 5
+      raid
+    when 6
+      boss_visit
+    when (7..10)
+      ordinary_day
+    else
+      raise "Event not generated"
+    end
+    puts "___" * 30
+    @mobster.get_stats
+    puts "===" * 30
+    puts "===" * 30
   end
-  puts "___" * 30
-  @mobster.get_stats
-  #TODO: check to see if mobster will level up
-  puts "===" * 30
-  puts "===" * 30
 end
+
+if @round % 50 == 0
+  puts "End Boss Appears"
+  #TODO: create End Boss method
+  action_loop
+else
+  puts "Rival Boss Appears"
+  new_boss
+  action_loop
+end
+
+action_loop
