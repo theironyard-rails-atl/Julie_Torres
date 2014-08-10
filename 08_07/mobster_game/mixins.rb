@@ -96,6 +96,11 @@ module Fightable
       self.get_killer(rival)
     else
       puts "You do not have sufficient experience to fight this rival."
+      puts "The rival slaps you for your insolence and takes his payment."
+      puts "The kids on the street point and laugh, and you lose 10 respect."
+      self.lose_respect(10)
+      tribute = (self.money.to_i * 0.1).to_i
+      self.lose_money(tribute)
     end
   end
 

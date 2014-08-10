@@ -3,8 +3,8 @@ class Rival
   attr_accessor :fightable, :alive, :rival_turf
 
   def initialize(level=(rand(1..9)))
-    @level = level
-    @money = level * 10
+    @level = level.to_i
+    @money = @level * 10
     @fightable = true
     @alive = true
   end
