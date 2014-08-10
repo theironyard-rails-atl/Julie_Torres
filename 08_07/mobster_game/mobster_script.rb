@@ -180,6 +180,22 @@ def raid
   end
 end
 
+def boss_visit
+  puts "The boss comes by to check out your operation."
+  @mobster.level_check
+  if @mobster.level_up >= 1
+    puts "The boss is impressed with your work."
+    puts "You've leveled up. You are now level #{@mobster.level}."
+    puts "(When you level up, your respect is reset to zero.)"
+    @mobster.level_up = 0
+    @mobster.respect = 0
+  else
+    puts "The boss catches you slacking off."
+    puts "You give him a little gift to keep him off your back."
+    @mobster.money -= 100
+  end
+end
+
 
 
 create_mobster
@@ -192,14 +208,16 @@ until @action == "exit"
   case event
   when 11
     new_rival
-  when (1..5)
+  when 21
     new_business
   when 31
     new_boss
-  when 41
+  when (1..5)
     ordinary_day
-  when (6..10)
+  when 51
     raid
+  when (6..10)
+    boss_visit
   else
     raise "Event not generated"
   end

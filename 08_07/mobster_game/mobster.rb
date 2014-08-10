@@ -1,11 +1,12 @@
 require "./mixins.rb"
+require "pry"
 
 class Mobster
   include Arrestable
   include Respectable
   include Cashable
   include Fightable
-  attr_accessor :respect, :level, :money, :heat, :turf, :fights_won, :bosses_killed, :kill_count
+  attr_accessor :respect, :level, :money, :heat, :turf, :fights_won, :bosses_killed, :kill_count, :level_up
 
   def initialize(name)
     @name = name
@@ -19,9 +20,18 @@ class Mobster
     @kill_count = 0
   end
 
-  def level_up
-    "You've leveled up! You are now #{@level}!"
-    @level += 1
+  def level_check
+    if @level < 5
+      @level_up = (@respect / 20).to_i
+      # binding.pry
+    elsif @level < 10
+      @level_up = (@respect / 100).to_i
+    elsif @level < 50
+      @level_up = (@respect / 500).to_i
+    else
+      @level_up = (respect / 1000).to_i
+    end
+    @level += @level_up
   end
 
   def get_stats
