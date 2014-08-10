@@ -203,21 +203,21 @@ begin_game
 
 
 #TODO: add additional events
-until @action == "exit"
+until @action == "exit"  #TODO: add round counter, and have boss appear every 20 rounds, big boss appear every 50
   event = rand(1..10).to_i
   case event
-  when 11
+  when (1..2)
     new_rival
-  when 21
+  when (3..4)
     new_business
-  when 31
-    new_boss
-  when (1..5)
-    ordinary_day
-  when 51
+  # when 6
+  #   new_boss
+  when 5
     raid
-  when (6..10)
+  when 6
     boss_visit
+  when (7..10)
+    ordinary_day
   else
     raise "Event not generated"
   end
