@@ -5,6 +5,7 @@ require "./rival.rb"
 
 
 #TODO: create a Game class, and dump all this into it
+#TODO: make the ouput prettier by putsing a ____ line aft
 
 def create_mobster
   puts "What is your mobster's name?"
@@ -120,20 +121,66 @@ def respond_to_boss
   end
 end
 
+def ordinary_day
+  @options = ['collect', 'shmooze', 'hussle', 'lay low', 'help', 'exit']
+
+  puts "The neighborhood is quiet."
+  puts "It's a good day to make some cash or build your reputation."
+  puts "Your options are #{@options}. What would you like to do?"
+  @action = gets.chomp.downcase
+  everyday_action
+end
+
+def everyday_action
+  if @action == "help"
+    puts "Help page"
+    #TODO: display help
+  elsif @action == "exit"
+    exit
+  elsif @action == "collect"
+    puts "You collect"
+    @mobster.turf.each do |biz|
+      @mobster.collect(biz)
+    end
+
+    #extort from all businesses in your territory
+  elsif @action == "hussle"
+    #earn a random amount of money, should be lower than what you get with 3 properties
+  elsif @action == "shmooze"
+    #increase respect by talking to other mobsters
+  elsif @action.include? ("lay" || "low")
+    #lay low method
+  else
+    puts "That is not a valid action. Your options are #{@options}."
+    @action = gets.chomp.downcase
+    everyday_action
+  end
+end
+
+
+
 create_mobster
 begin_game
 
+
+#TODO: add additional events
 until @action == "exit"
   event = rand(1..10).to_i
   case event
-  when 1
+  when 11
     new_rival
-  when 2
+  when (6..10)
     new_business
-  when (3..10)
+  when 31
     new_boss
+  when (1..5)
+    ordinary_day
   else
     raise "Event not generated"
   end
+  puts "___" * 30
   @mobster.get_stats
+  #TODO: check to see if mobster will level up
+  puts "===" * 30
+  puts "===" * 30
 end

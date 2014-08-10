@@ -26,7 +26,7 @@ class Mobster
 
   def get_stats
     puts "You have $#{@money}, #{@heat} heat, #{@respect} respect, and are level #{@level}."
-    puts "You have #{@turf.count} territories: #{@turf}"
+    puts "You have #{@turf.count} territories: #{@turf}"  #TODO: make this output only the name of business
   end
 
   def lay_low
@@ -35,14 +35,19 @@ class Mobster
   end
 
   def extort(business)
-    level = business.level.to_i
+    @turf.push business
+    self.collect(business)
     heat = rand(0..level)
-    money = 5 * level
     @heat += heat
-    @money += money
-    #TODO: make business.extorted_by == mobster, and allow collect method, add business to "territory" array
-    puts "You took on #{heat} heat and earned $#{money}"
   end
+
+  def collect(business)
+    level = business.level.to_i
+    money = 5 * level
+    @money += money
+    puts "You earned $#{money}"
+  end
+
 
   def add_territory(territory)
     @turf.push(territory)
