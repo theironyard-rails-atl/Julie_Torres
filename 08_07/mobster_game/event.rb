@@ -1,5 +1,8 @@
+require "./mobster_script.rb"
+
 class Event
   attr_reader :options
+  attr_accessor :game
 
   def initialize
     @options = []
@@ -16,19 +19,6 @@ class Rival_Crossing < Event
     puts "Your options are #{@options}. What would you like to do?"
     @action = gets.chomp.downcase
   end
-
-  def respond(action)
-    if @action == "help"
-      puts "Help page"
-      #TODO: display help
-    elsif @action == "exit"
-      exit
-    elsif @action == "fight"
-      mobster.fight(@rival)
-    elsif @action == "ignore"
-      puts "You ignore the rival, and go about your business."
-    else
-      puts "That is not a valid action. Your options are #{@options}."
-      @action = gets.chomp.downcase
-    end
 end
+
+crossing = Rival_Crossing.new
