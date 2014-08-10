@@ -3,16 +3,11 @@ require "./mobster.rb"
 require "./business.rb"
 require "./rival.rb"
 
-#TODO: fix bug that is causing level to go negative
 #TODO: create a Game class, and dump all this into it
-#TODO: output the round
-#TODO: adjust fight settings to make it easier to win
-#TODO: fix output of round on rival boss levels
 #TODO: add additional business names
-#TODO: proceed to next day only when player hits enter
 #TODO: create weapons to be purchased with money
 #TODO: display help
-#TODO: create End Boss method
+#TODO: create pay_tribute method in Fightable module to distinguish between boss & end boss tribute
 
 def create_mobster
   puts "What is your mobster's name?"
@@ -203,13 +198,40 @@ def boss_visit
   end
 end
 
+def end_boss
+  @options = ['pay', 'kill', 'help', 'exit']
+  @end_boss = Rival_End_Boss.new(10, "California")
 
+  puts "The END Boss appears and challenges you for your turf."
+  puts "If you are powerful enough, you can try to kill him. Otherwise, you must pay up."
+  puts "Your options are #{@options}. What would you like to do?"
+  @action = gets.chomp.downcase
+  respond_to_end_boss
+end
+
+def respond_to_end_boss
+  if @action == "help"
+    puts "Help page"
+    #TODO: display help
+  elsif @action == "exit"
+    exit
+  elsif @action == "kill"
+    @mobster.fight_to_death(@end_boss)
+  elsif @action == "pay"
+    @mobster.turf = []
+    puts "You turn over all your territories to the END Boss, and live to fight another day."
+  else
+    puts "That is not a valid action. Your options are #{@options}."
+    @action = gets.chomp.downcase
+    respond_to_rival
+  end
+end
 
 
 #Game continues generating events until user chooses to exit, or until 20 or 50 rounds have passed
 def action_loop
   until @action == "exit" || (@round % 20) == 0 ||  (@round % 50 == 0)
-    @round += 1
+    @round += 1 unless (@round % 20) == 0 ||  (@round % 50 == 0)
     puts "It is day #{@round}"
     event = rand(1..10)
     case event
@@ -228,25 +250,28 @@ def action_loop
     end
     puts "___" * 30
     @mobster.get_stats
+    puts "Press enter to end day."
+    gets.chomp   #requires player to press enter to continue
     puts "===" * 30
     puts "===" * 30
   end
 end
 
-@round = 48
+@round = 49
 create_mobster
 begin_game
 action_loop
 
 if @round % 50 == 0
-  puts "!!!!!!!End Boss Appears!!!!!!"
-  #TODO: create End Boss method
   @round += 1
+  puts "It is day #{@round}"
+  puts "!!!!!!!End Boss Appears!!!!!!"
+  end_boss
 else
+  @round += 1
+  puts "It is day #{@round}"
   puts "Rival Boss Appears"
   new_boss
-  @round += 1
 end
-
 
 action_loop

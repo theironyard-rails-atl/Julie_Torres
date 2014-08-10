@@ -25,7 +25,6 @@ class Mobster
       @level_up = (@respect / 20).to_i
     elsif @level < 10
       @level_up = (@respect / 100).to_i
-      binding.pry
     elsif @level < 50
       @level_up = (@respect / 500).to_i
     else
