@@ -8,6 +8,11 @@ require "./rival.rb"
 #TODO: output the round
 #TODO: adjust fight settings to make it easier to win
 #TODO: fix output of round on rival boss levels
+#TODO: add additional business names
+#TODO: proceed to next day only when player hits enter
+#TODO: create weapons to be purchased with money
+#TODO: display help
+#TODO: create End Boss method
 
 def create_mobster
   puts "What is your mobster's name?"
@@ -199,16 +204,13 @@ def boss_visit
 end
 
 
-@round = 19
-create_mobster
-begin_game
 
 
 #Game continues generating events until user chooses to exit, or until 20 or 50 rounds have passed
 def action_loop
-  @round += 1
-  puts "It is day #{@round}"
   until @action == "exit" || (@round % 20) == 0 ||  (@round % 50 == 0)
+    @round += 1
+    puts "It is day #{@round}"
     event = rand(1..10)
     case event
     when (1..2)
@@ -231,14 +233,20 @@ def action_loop
   end
 end
 
+@round = 48
+create_mobster
+begin_game
+action_loop
+
 if @round % 50 == 0
-  puts "End Boss Appears"
+  puts "!!!!!!!End Boss Appears!!!!!!"
   #TODO: create End Boss method
-  action_loop
+  @round += 1
 else
   puts "Rival Boss Appears"
   new_boss
-  action_loop
+  @round += 1
 end
+
 
 action_loop

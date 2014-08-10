@@ -54,7 +54,7 @@ module Fightable
   end
 
   def get_winner(rival)
-    damage = rival.level.to_i * rand(8)
+    damage = rival.level.to_i * rand(5)
     hits = self.level * rand(10)
 
     if damage < hits

@@ -23,9 +23,9 @@ class Mobster
   def level_check
     if @level < 5
       @level_up = (@respect / 20).to_i
-      # binding.pry
     elsif @level < 10
       @level_up = (@respect / 100).to_i
+      binding.pry
     elsif @level < 50
       @level_up = (@respect / 500).to_i
     else
