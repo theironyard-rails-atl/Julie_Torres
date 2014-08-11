@@ -45,9 +45,3 @@ class Rival_End_Boss < Rival_Boss
     end
   end
 end
-
-
-
-
-
-  #create RivalBoss that inherits from Rival

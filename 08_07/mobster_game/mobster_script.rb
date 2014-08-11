@@ -3,11 +3,12 @@ require "./mobster.rb"
 require "./business.rb"
 require "./rival.rb"
 
-#TODO: create a Game class, and dump all this into it
-#TODO: add additional business names
+#TODO: create a Game class &/or Event class, and dump all this into it
+#TODO: add additional business names (YAML file)
 #TODO: create weapons to be purchased with money
 #TODO: display help
 #TODO: create pay_tribute method in Fightable module to distinguish between boss & end boss tribute
+#TODO: keep money from going negative or keep make money stay same if money is negative
 
 def create_mobster
   puts "What is your mobster's name?"
@@ -194,7 +195,11 @@ def boss_visit
   else
     puts "The boss catches you slacking off."
     puts "You give him a little gift to keep him off your back."
-    @mobster.money -= 100
+    if @mobster.money > 100
+      @mobster.money -= 100
+    else
+      @mobster.money = 0
+    end
   end
 end
 
@@ -230,8 +235,8 @@ end
 
 #Game continues generating events until user chooses to exit, or until 20 or 50 rounds have passed
 def action_loop
-  until @action == "exit" || (@round % 20) == 0 ||  (@round % 50 == 0)
-    @round += 1 unless (@round % 20) == 0 ||  (@round % 50 == 0)
+  until @action == "exit" || @round != 0 && ((@round % 20) == 0 || (@round % 50 == 0))
+      @round += 1 #unless (@round % 20) == 0 ||  (@round % 50 == 0)
     puts "It is day #{@round}"
     event = rand(1..10)
     case event
@@ -257,7 +262,7 @@ def action_loop
   end
 end
 
-@round = 1
+@round = 0
 create_mobster
 begin_game
 action_loop
