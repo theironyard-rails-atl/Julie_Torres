@@ -22,8 +22,7 @@ end
 
 def begin_game
   if @action == "help"
-    puts "Instructions go here."
-    #TODO: create help method and page.
+    display_help
   elsif @action == "start"
     puts "Beginning game."
     @mobster.get_stats
@@ -33,6 +32,13 @@ def begin_game
     begin_game
     #TODO: make sure this works
   end
+end
+
+def display_help
+  puts "Help stuff"
+  puts "Press enter to return to game."
+  enter = gets.chomp
+  puts enter
 end
 
 def new_rival
@@ -48,8 +54,8 @@ end
 
 def respond_to_rival
   if @action == "help"
-    puts "Help page"
-    #TODO: display help
+    display_help
+    @round -= 1  #keeps it from counting "help as a round"
   elsif @action == "exit"
     exit
   elsif @action == "fight"
@@ -79,7 +85,8 @@ end
 def respond_to_business
   if @action == "help"
     puts "Help page"
-    #TODO: display help
+    display_help
+    @round -= 1
   elsif @action == "exit"
     exit
   elsif @action == "extort"
@@ -107,7 +114,8 @@ end
 def respond_to_boss
   if @action == "help"
     puts "Help page"
-    #TODO: display help
+    display_help
+    @round -= 1
   elsif @action == "exit"
     exit
   elsif @action == "kill"
@@ -136,8 +144,8 @@ end
 
 def everyday_action
   if @action == "help"
-    puts "Help page"
-    #TODO: display help
+    display_help
+    @round -= 1
   elsif @action == "exit"
     exit
   elsif @action == "collect"
@@ -217,7 +225,8 @@ end
 def respond_to_end_boss
   if @action == "help"
     puts "Help page"
-    #TODO: display help
+    display_help
+    @round -= 1
   elsif @action == "exit"
     exit
   elsif @action == "kill"
@@ -236,7 +245,7 @@ end
 #Game continues generating events until user chooses to exit, or until 20 or 50 rounds have passed
 def action_loop
   until @action == "exit" || @round != 0 && ((@round % 20) == 0 || (@round % 50 == 0))
-      @round += 1 #unless (@round % 20) == 0 ||  (@round % 50 == 0)
+      @round += 1
     puts "It is day #{@round}"
     event = rand(1..10)
     case event
