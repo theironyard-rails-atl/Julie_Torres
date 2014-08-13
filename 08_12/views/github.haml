@@ -1,0 +1,15 @@
+%html
+  %head
+    %link{:href=>"//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css", :rel=>"stylesheet"}
+
+  %body
+    .container
+      %img(src=@url)
+      %form{method: "GET"}
+        %input{name: "emoji"}
+        %button Emoji Me!
+
+    %h1 Omniscient Bob says, here are the options:
+    %ol
+      - @available_emoji.each do |emoji_name|
+        %li= emoji_name
