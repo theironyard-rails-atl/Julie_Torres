@@ -8,7 +8,7 @@ require "./rival.rb"
 #TODO: create weapons to be purchased with money
 #TODO: display help
 #TODO: create pay_tribute method in Fightable module to distinguish between boss & end boss tribute
-#TODO: keep money from going negative or keep make money stay same if money is negative
+
 
 def create_mobster
   puts "What is your mobster's name?"
@@ -30,7 +30,6 @@ def begin_game
     puts "That is not a valid option. Enter 'help' or 'start'."
     @action = gets.chomp.downcase
     begin_game
-    #TODO: make sure this works
   end
 end
 
