@@ -16,9 +16,9 @@ class GamesController < ApplicationController
     @game.guess(letter)
 
     if @game.lost?
-      redirect_to "https://www.youtube.com/watch?v=VDW0ZnZxjn4"
+      redirect_to ({:action => 'index'})
     elsif @game.won?
-      redirect_to "http://you-win-the-internet.com"
+      redirect_to ({:action => 'index'})
     else
       redirect_to game_path
     end
