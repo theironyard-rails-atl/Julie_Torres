@@ -1,4 +1,18 @@
-%pre= @game.board
+- if @game.won?
+  %h1 You win!
+  %h2 The answer was: #{@game.answer}
+-elsif @game.lost?
+  %h1 You lose.
+  %h2 The word was #{@game.answer}.
+-else
+  %h1 Guess a letter.
+
+
+-unless @game.finished?
+  %pre= @game.board
+  = form_tag(game_path(@game), method: "patch") do
+    = text_field_tag "letter"
+    = submit_tag "Guess"
 
 %h3 Status
 %p
@@ -7,7 +21,3 @@
 %h3 Guessed
 %p
   = @game.guessed
-
-= form_tag(game_path(@game), method: "patch") do
-  = text_field_tag "letter"
-  = submit_tag "Guess"

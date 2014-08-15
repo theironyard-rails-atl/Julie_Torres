@@ -15,12 +15,13 @@ class GamesController < ApplicationController
     letter = params[:letter]
     @game.guess(letter)
 
-    if @game.lost?
-      redirect_to ({:action => 'index'})
-    elsif @game.won?
-      redirect_to ({:action => 'index'})
-    else
+    # if @game.lost?
+    #   redirect_to ({:action => 'index'})
+    # elsif @game.won?
+    #   redirect_to ({:action => 'index'})
+    # else
       redirect_to game_path
-    end
+    # end
   end
+
 end
