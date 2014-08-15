@@ -15,6 +15,8 @@ describe Survey do
 ####Getting an error "undefined method `delete_at'
 #### From line 17 of survey.rb
   it "ends when all questions have been asked" do
+    :questons.to_s
+    :question_count[0]
     @poll.ask_question
     @poll.ask_question
     @poll.ask_question

@@ -36,7 +36,6 @@ attr_reader :score, :answered_right, :answered_wrong
 
   def guess
     puts "You answered: #{@answer}"
-    #TODO: find out why this is erroring out
     if @quiz.current_question[:answer] == @quiz.current_question[:answer]
       @score += 1
       @answered_right.push @quiz.current_question[:question]

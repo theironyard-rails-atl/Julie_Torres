@@ -22,15 +22,15 @@ class Survey
     @question_count == 0
   end
 
-  def highest?
+  def highest
     @answers.max
   end
 
-  def lowest?
+  def lowest
     @answers.min
   end
 
-  def mean?
+  def mean
     @answers.reduce(:+) / @answers.length.to_f
   end
 end

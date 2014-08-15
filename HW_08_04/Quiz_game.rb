@@ -27,29 +27,29 @@ end
 class Player
 attr_reader :score, :answered_right, :answered_wrong
 
-  def initialize
+  def initialize(quiz)
     @score = 0
     @answered_right = [ ]
     @answered_wrong = [ ]
+    @quiz = quiz
   end
 
   def guess
     puts "You answered: #{@answer}"
     #TODO: find out why this is erroring out
-    if @current_question[:answer] == @answer -1
+    if @quiz.current_question[:answer] == @quiz.current_question[:answer]
       @score += 1
-      @answered_right.push @current_question[:question]
+      @answered_right.push @quiz.current_question[:question]
     else
-      @answered_wrong.push @current_question[:question]
+      @answered_wrong.push @quiz.current_question[:question]
     end
   end
 end
 
 
 
-
 quiz = Quiz.new
-player = Player.new
+player = Player.new(quiz)
 
 
 
@@ -58,6 +58,6 @@ until quiz.finished?
   player.guess
 end
 
-puts "Game Over. Your score is #{game.score}"
-puts "Your correct answers are #{game.answered_right}"
-puts "The questions you answered incorreclty are #{game.answered_wrong}"
+puts "Game Over. Your score is #{player.score}"
+puts "Your correct answers are #{player.answered_right}"
+puts "The questions you answered incorrectly are #{player.answered_wrong}"

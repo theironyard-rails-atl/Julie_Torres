@@ -1,0 +1,24 @@
+GIT
+  remote: git@github.com:stympy/faker.git
+  revision: 023de88cb783e4f3e0709706468346c2093a3e30
+  specs:
+    faker (1.4.2)
+      i18n (~> 0.5)
+
+GEM
+  specs:
+    coderay (1.1.0)
+    i18n (0.6.11)
+    method_source (0.8.2)
+    pry (0.10.0)
+      coderay (~> 1.1.0)
+      method_source (~> 0.8.1)
+      slop (~> 3.4)
+    slop (3.6.0)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  faker!
+  pry

@@ -4,10 +4,10 @@ require "./business.rb"
 require "./rival.rb"
 
 #TODO: create a Game class &/or Event class, and dump all this into it
-#TODO: add additional business names (YAML file)
 #TODO: create weapons to be purchased with money
 #TODO: display help
 #TODO: create pay_tribute method in Fightable module to distinguish between boss & end boss tribute
+#TODO: create different types of mobsters
 
 
 def create_mobster

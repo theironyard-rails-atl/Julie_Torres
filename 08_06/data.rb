@@ -29,10 +29,17 @@ class Inventory
     @widgets.min_by { |widget| widget[:price] }
   end
 
-  def get_sold_by_dept
-    sold = @widgets.map { |widget| widget[:sold].to_s + " sold by " + widget[:department].to_s}
+  # def get_sold_by_dept
+  #   widget = @widgets.map { |widget| widget}
+  #   departments = []
+  #   widget.each_with_index do |
+  # 
+  # end
 
-  end
+  # def dept_total
+  #   department = @widgets.map { |widget| department = widget[:department] department.value = widget[:sold]}
+  #   department.map { |department| department[:sold]}
+  # end
 
   def get_revenue
      sold = @widgets.map { |widget| widget[:sold] * widget[:price]}
@@ -60,8 +67,8 @@ end
 
 inventory = Inventory.new
 # puts inventory.get_max_price
-puts "Revenue is #{inventory.get_revenue}."
-puts "Total cost is #{inventory.get_cost}."
-puts "Total profit is #{inventory.get_profit}."
+# puts "Revenue is #{inventory.get_revenue}."
+# puts "Total cost is #{inventory.get_cost}."
+# puts "Total profit is #{inventory.get_profit}."
 puts inventory.get_sold_by_dept
-puts "Best selling items are: #{inventory.get_best_selling}"
+# puts "Best selling items are: #{inventory.get_best_selling}"

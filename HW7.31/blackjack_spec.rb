@@ -67,7 +67,7 @@ describe Hand do
     assert_equal @hand.hand_value, 21
 
     @hand.add(Card.new(5))
-    assert_equal @hand.ace_adjust.hand_value, 16
+    assert_equal @hand.hand_value, 16
   end
 
   # it "can bust" do

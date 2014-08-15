@@ -2,14 +2,13 @@ require 'pry'
 
 #Suits have been excluded because they do not affect gameplay.
 
-arr = (2..10).to_a << :A, :J, :Q, :K
-ITEMS = arr.flatten!
+ITEMS = (2..10).to_a + [:A, :J, :Q, :K]
 DECK = ITEMS.concat(ITEMS).concat(ITEMS)
 #puts "Length = #{DECK.length}"
 
 
 class Card
-  attr_accessor :card_value, :card, :name
+  attr_accessor :card, :name
   # attr_reader :card
 
   # def self.create_with_attributes(card, card_value)
@@ -19,7 +18,6 @@ class Card
 
   def initialize(card)
     @card = card  #TODO: change this to @rank
-    @card_value = card_value
   end
 
    def value
@@ -63,6 +61,9 @@ class Deck
     @drawn << @new_card
     @new_card
   end
+
+  #def reshuffle #TODO: create reshuffle method
+
 end
 
 class Hand
