@@ -1,0 +1,13 @@
+%pre= @game.board
+
+%h3 Status
+%p
+  = "#{@game.misses} / #{@game.max_misses} misses"
+
+%h3 Guessed
+%p
+  = @game.guessed
+
+= form_tag(game_path(@game), method: "patch") do
+  = text_field_tag "letter"
+  = submit_tag "Guess"

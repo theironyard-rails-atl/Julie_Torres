@@ -1,0 +1,14 @@
+%h1 Hangman Games
+
+%table
+  %thead
+    %tr
+      %th ID
+      %th Board
+      %th Status
+  %tbody
+    - @games.each do |game|
+      %tr
+        %td= game.id
+        %td= game.board
+        %td= "#{game.misses} / #{game.max_misses}"
