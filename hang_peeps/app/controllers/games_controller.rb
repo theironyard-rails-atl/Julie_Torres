@@ -1,12 +1,13 @@
 #Note the plural
 class GamesController < ApplicationController
   def index #display a collection of games
-    @games = Game.all
+    user = User.find(params[:user_id])
+    @games = current_user.games
   end
 
   def show
     id = params[:id]
-    @game = Game.find(id)
+    @game = current_user.games.find(id)
   end
 
   def update
@@ -15,11 +16,6 @@ class GamesController < ApplicationController
     letter = params[:letter]
     @game.guess(letter)
 
-    # if @game.lost?
-    #   redirect_to ({:action => 'index'})
-    # elsif @game.won?
-    #   redirect_to ({:action => 'index'})
-    # else
       redirect_to game_path
     # end
   end

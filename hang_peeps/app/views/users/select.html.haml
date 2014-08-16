@@ -1,0 +1,5 @@
+= form_tag(change_user_path, method: :post) do
+    %select{ name: :selected_user }
+          - @users.each do |user|
+              %option{ value: user.id }= user.name
+    %button Login
