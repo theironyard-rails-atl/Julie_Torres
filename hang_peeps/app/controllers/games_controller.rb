@@ -10,14 +10,22 @@ class GamesController < ApplicationController
     @game = current_user.games.find(id)
   end
 
+  def create
+     random_word = File.read(__FILE__).
+       split(" ").reject{ |word| word.length < 5 }.sample
+
+     game = current_user.games.create!(
+       max_misses: 10,
+       misses:     0,
+       answer:     random_word,
+       guessed:    ""
+     )
+     redirect_to game
+   end
+
   def update
-    id = params[:id]
-    @game = Game.find(id)
-    letter = params[:letter]
-    @game.guess(letter)
-
-      redirect_to game_path
-    # end
-  end
-
+    game = current_user.games.find params[:id]
+     game.guess params[:letter]
+     redirect_to game
+   end
 end

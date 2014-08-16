@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   resources :games
 
-  root to: 'users#select'
+    get  '/' => 'users#select'
     post '/change_user' => 'users#change'
 
 end

@@ -12,6 +12,8 @@
 #
 
 class Game < ActiveRecord::Base
+  belongs_to :user
+  
   validates_presence_of :answer, :max_misses, :misses
   validate :guessed_string_is_not_nil
 

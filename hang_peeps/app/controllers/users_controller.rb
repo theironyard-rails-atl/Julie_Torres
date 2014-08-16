@@ -1,4 +1,5 @@
 class UsersController < Application_Controller
+
     def select
         @users = User.all
     end
