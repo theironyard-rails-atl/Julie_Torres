@@ -20,6 +20,8 @@ describe "User pages" do
   end
 end
 
+
+
 describe "Static pages" do
  subject { page }
 
