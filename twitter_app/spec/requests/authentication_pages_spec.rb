@@ -14,7 +14,7 @@ describe "Authentication" do
       it { should have_selector('div.alert.alert-error') }
     end
 
-  describe "with valid information" do
+    describe "with valid information" do
       let(:user) { FactoryGirl.create(:user) }
       before do
         fill_in "Email",    with: user.email.upcase
